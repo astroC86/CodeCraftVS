@@ -4,9 +4,12 @@ import { GitRepositoryScanner } from './gitScanner';
 import { CraftignoreManager } from './craftignoreManager';
 import { RepositoryUpdater  } from './repositoryUpdater';
 import { RepositoryProvider, RepositoryItem } from './repositoryProvider';
+import { LogsProvider } from './logsProvider';
 
+let logsProvider: LogsProvider;
 
 export async function activate(context: vscode.ExtensionContext) {
+    logsProvider             = new LogsProvider();
     const gitScanner         = new GitRepositoryScanner();
     const repositoryUpdater  = new RepositoryUpdater();
     const craftignoreManager = new CraftignoreManager();
@@ -18,6 +21,11 @@ export async function activate(context: vscode.ExtensionContext) {
         repositoryProvider
     );
     
+    vscode.window.registerTreeDataProvider(
+        'gitStatusChecker.LogsView', 
+        logsProvider
+    );
+
     // Status bar item to show overall status
     const statusBarItem = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Left,
@@ -105,6 +113,10 @@ async function updateStatusBar(
     }
     
     statusBarItem.show();
+}
+
+export function getLogsProvider(): LogsProvider {
+    return logsProvider;
 }
 
 export function deactivate() {}

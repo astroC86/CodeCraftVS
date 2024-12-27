@@ -20,7 +20,18 @@
   "activationEvents": [
     "onView:gitStatusChecker.repositoryView"
   ],
+
   "contributes": {
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "myLogsPanel",
+          "title": "Git Status' Logs",
+          "icon": "resources/logs.svg"
+        }
+      ]
+    },
+
     "commands": [
       {
         "command": "gitStatusChecker.refresh",
@@ -40,6 +51,7 @@
         "title": "Update Repository"
       }
     ],
+
     "menus": {
       "view/item/context": [
         {
@@ -57,6 +69,12 @@
         {
           "id": "gitStatusChecker.repositoryView",
           "name": "Git Status"
+        }
+      ],
+      "myLogsPanel": [
+        {
+          "id": "gitStatusChecker.LogsView",
+          "name": "Git Status' Logs"
         }
       ]
     },
